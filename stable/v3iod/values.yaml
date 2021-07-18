@@ -1,11 +1,16 @@
 v3iod:
   logger:
-    severity: debug
+    v3io_severity: debug
+    xio_severity: info
 
   image:
     repository: iguaziodocker/v3io_dayman
     tag: 2.0.0
     pullPolicy: IfNotPresent
+
+  environment:
+    extra: {}
+
 
   user:
     # create new user when running (new username must not match iguazio and must have UID gt 1000)

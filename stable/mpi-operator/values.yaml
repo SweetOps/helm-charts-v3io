@@ -1,3 +1,6 @@
+# A list of namespaces that the operator will also get resources access to
+additionalManagedNamespaces: []
+
 crd:
   create: false
   version: v1
@@ -16,8 +19,8 @@ deployment:
 image:
   deployment:
     replicas: 1
-    repository: mpioperator/mpi-operator
-    tag: v0.2.3
+    repository: gcr.io/iguazio/mpi-operator
+    tag: v0.2.3-igz
     pullPolicy: IfNotPresent
   kubectlDelivery:
     repository: mpioperator/kubectl-delivery

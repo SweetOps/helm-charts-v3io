@@ -4,6 +4,10 @@ kind: CustomResourceDefinition
 metadata:
   creationTimestamp: null
   name: sparkapplications.sparkoperator.k8s.io
+  annotations:
+
+    # this should be the PR that approved it to kubernetes.io but...STFU
+    "api-approved.kubernetes.io": "https://github.com/GoogleCloudPlatform/spark-on-k8s-operator/issues/1043"
 spec:
   group: sparkoperator.k8s.io
   names:
@@ -14,6 +18,7 @@ spec:
     - sparkapp
     singular: sparkapplication
   scope: Namespaced
+{{- if eq (include "crd.apiVersion" .) "apiextensions.k8s.io/v1beta1" }}
   subresources:
     status: {}
   validation:
@@ -2523,10 +2528,23 @@ spec:
       - metadata
       - spec
       type: object
+{{- end }}
   versions:
   - name: v1beta2
     served: true
     storage: true
+{{- if eq (include "crd.apiVersion" .) "apiextensions.k8s.io/v1" }}
+    subresources:
+      status: {}
+    schema:
+      openAPIV3Schema:
+        type: object
+        properties:
+          spec:
+            x-kubernetes-preserve-unknown-fields: true
+          status:
+            x-kubernetes-preserve-unknown-fields: true
+{{- end }}
 status:
   acceptedNames:
     kind: ""
@@ -2539,6 +2557,10 @@ kind: CustomResourceDefinition
 metadata:
   creationTimestamp: null
   name: scheduledsparkapplications.sparkoperator.k8s.io
+  annotations:
+
+    # this should be the PR that approved it to kubernetes.io but...STFU
+    "api-approved.kubernetes.io": "https://github.com/GoogleCloudPlatform/spark-on-k8s-operator/issues/1043"
 spec:
   group: sparkoperator.k8s.io
   names:
@@ -2549,6 +2571,7 @@ spec:
     - scheduledsparkapp
     singular: scheduledsparkapplication
   scope: Namespaced
+{{- if eq (include "crd.apiVersion" .) "apiextensions.k8s.io/v1beta1" }}
   subresources:
     status: {}
   validation:
@@ -5076,10 +5099,23 @@ spec:
       - metadata
       - spec
       type: object
+{{- end }}
   versions:
   - name: v1beta2
     served: true
     storage: true
+{{- if eq (include "crd.apiVersion" .) "apiextensions.k8s.io/v1" }}
+    subresources:
+      status: {}
+    schema:
+      openAPIV3Schema:
+        type: object
+        properties:
+          spec:
+            x-kubernetes-preserve-unknown-fields: true
+          status:
+            x-kubernetes-preserve-unknown-fields: true
+{{- end }}
 status:
   acceptedNames:
     kind: ""

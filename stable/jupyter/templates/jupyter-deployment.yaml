@@ -81,18 +81,6 @@ spec:
               name: jupyter
           resources:
 {{ toYaml .Values.resources | indent 12 }}
-{{- if .Values.nodeSelector }}
-      nodeSelector:
-{{ toYaml .Values.nodeSelector | indent 8 }}
-{{- end }}
-{{- if .Values.affinity }}
-      affinity:
-{{ toYaml .Values.affinity | indent 8 }}
-{{- end }}
-{{- if .Values.tolerations }}
-      tolerations:
-{{ toYaml .Values.tolerations | indent 8 }}
-{{- end }}
           livenessProbe:
             exec:
               command:
@@ -112,6 +100,10 @@ spec:
             initialDelaySeconds: 5
             periodSeconds: 10
           env:
+{{- if .Values.config.jsonLogging }}
+            - name: JUPYTER_ENABLE_JSON_LOGGING
+              value: {{ .Values.config.jsonLogging | quote }}
+{{- end }}
             - name: SHELL
               value: /bin/bash
 {{- if .Values.presto }}
@@ -194,4 +186,16 @@ spec:
 {{- end }}
 {{- if .Values.pvc }}
 {{ include .Values.pvc.pvcVolumesTemplate . | indent 8 }}
+{{- end }}
+{{- if .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.nodeSelector | indent 8 }}
+{{- end }}
+{{- if .Values.affinity }}
+      affinity:
+{{ toYaml .Values.affinity | indent 8 }}
+{{- end }}
+{{- if .Values.tolerations }}
+      tolerations:
+{{ toYaml .Values.tolerations | indent 8 }}
 {{- end }}
